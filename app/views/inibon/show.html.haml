@@ -1,0 +1,42 @@
+.breadcrumb
+  = render 'inibon/breadcrumb'
+  = render 'inibon/versions'
+
+%h1 Showing #{@thing.identification}
+
+- begin
+  = render "inibon/#{@clazz.model_name.route_key}/#{params[:action]}"
+- rescue ActionView::MissingTemplate
+  = "Error rendering #{"inibon/#{@clazz.model_name.route_key}/#{params[:action]}"}"
+
+%table.table.bordered
+  %thead
+    %tr
+      %th Attribute
+      %th Value
+  %tbody
+    - @clazz.reflect_on_all_associations.each do |assoc|
+      - case assoc.macro
+      - when :has_many
+        - begin
+          %tr
+            %td= "#{assoc.macro} #{assoc.name}"
+            %td= link_to "#{assoc.class_name.constantize.model_name.route_key} (#{@thing.send(assoc.name).count})",
+              ([:inibon] + (@chain) + [assoc.class_name.constantize.model_name.route_key]).uniq, class: 'btn'
+        - rescue => e
+          %tr
+            %td= "#{assoc.macro} #{assoc.name}"
+            %td= "(Exception: #{e.message})"
+      - when :belongs_to
+        - if @thing.send(assoc.name)
+          %tr
+            %td= "#{assoc.macro} #{assoc.name}"
+            %td= link_to @thing.send(assoc.name).try(:identification), [:inibon,@thing.send(assoc.name)], class: 'btn'
+
+    - @clazz.column_names.each do |k|
+      %tr
+        %td= k.to_s.humanize
+        %td= @thing.send(k.to_s).pretty_inspect
+  
+= link_to 'Edit', [:edit,:inibon]+@chain, class: 'btn'
+= link_to 'Back', polymorphic_url([:inibon]+@chain[0..-2] + [@clazz.model_name.route_key]), class: 'btn'

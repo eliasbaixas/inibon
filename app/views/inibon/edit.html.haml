@@ -1,0 +1,9 @@
+%h1 Editing #{@clazz.model_name.singular} #{@chain.last.id}
+
+= form_for(@chain.last, as: :thingy,  url: [:inibon]+@chain, html: {class: 'form', method: :put}) do |f|
+  = render 'shared/errors', object: f.object, name: f.object.class.name
+  = render 'form', f: f
+  = f.submit 'Update', class: 'btn'
+
+= link_to 'Show', polymorphic_url([:inibon]+@chain), class: 'btn'
+= link_to 'Back', polymorphic_url([:inibon]+@chain[0..-2] + [@clazz.model_name.route_key]), class: 'btn'

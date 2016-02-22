@@ -1,0 +1,36 @@
+-# encoding: utf-8
+
+.breadcrumb
+  = render 'inibon/breadcrumb'
+
+- if @success || @failure
+  %h1= link_to(@success.any? ? "Successfully created #{@success.length} translations" : "No translations created", '#success')
+  %h1= link_to(@failure.any? ? "There were #{@failure.length} errors" : "No errors", '#errors') 
+  
+  #success
+    %h2 Success
+    %ul
+      - @success.each do |k,v|
+        %li= link_to k, [:inibon,@locale,v]
+  
+  #errors
+    %h2 Errors
+    %ul
+      - @failure.each do |k,v|
+        %li #{k}: v.errors.full_messages.to_sentence
+
+.row
+  .col-md-12
+    %h1 Missing Translations for #{@locale.name} (#{@locale.key})
+  .col-md-12
+    %h3 Copy all from:
+    = form_tag url_for do |f|
+      = select_tag :copy_locale, options_for_select((Inibon::Locale.all - [@locale]).ergo{|x| x.map(&:name).zip(x.map(&:key)) })
+      = submit_tag "Copy all!", class: 'btn btn-primary btn-xs'
+
+
+.row
+  .col-md-12
+    %ul
+      - @keys.each do |b|
+        %li!= link_to "Translate #{content_tag(:strong,b.key)} to #{@locale.name}".html_safe, [:new, :inibon, @locale, b, :translation]

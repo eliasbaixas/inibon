@@ -1,0 +1,4 @@
+= Inibon
+
+Store I18n translations in database
+

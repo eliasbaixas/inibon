@@ -1,0 +1,17 @@
+.breadcrumb
+  = render 'inibon/breadcrumb'
+
+%h1= link_to(@success.any? ? "Successfully created #{@success.length} translations" : "No translations created", '#success')
+%h1= link_to(@failure.any? ? "There were #{@failure.length} errors" : "No errors", '#errors') 
+
+#success
+  %h2 Success
+  %ul
+    - @success.each do |k,v|
+      %li= link_to k, [:inibon,@locale,v]
+
+#errors
+  %h2 Errors
+  %ul
+    - @failure.each do |k,v|
+      %li #{k}: v.errors.full_messages.to_sentence

@@ -1,0 +1,20 @@
+%table.table.table-bordered.table-striped
+  %tr
+    %th Language
+    %th Translation (click to copy this translation into the new one)
+  - (@key || @translation.key).translations.each do |t|
+    - next if t == @translation
+    %tr
+      %td= t.locale.key
+      %td= link_to_function t.value, "$('#the_value').val(#{t.value.to_json})"
+
+.form-group
+  = f.label :value, 'Valor', class: 'control-label col-xs-12 col-md-6'
+  .col-xs-12.col-md-6
+    = f.text_area :value, class: 'form-control autogrowable', rows: 5, id: 'the_value'
+
+.form-group
+  = f.label :status, "Estado", class: 'control-label col-xs-12 col-md-6'
+  .col-xs-12.col-md-6
+    = f.select :status, Inibon::Translation::STATUSES, class: 'form-control'
+

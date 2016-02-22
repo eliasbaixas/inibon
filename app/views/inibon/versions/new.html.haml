@@ -1,0 +1,18 @@
+.breadcrumb
+  = render 'inibon/breadcrumb', breadcrumbs: []
+  = render 'inibon/versions'
+
+.row
+  %h1.col-md-12 Creating new Version (will be #{Inibon::Version.maximum(:id).to_i + 1})
+
+.row
+  .col-md-6
+    = form_for [:inibon, @version] do |f|
+      = render 'form', f:f
+      .form-group
+        .col-xs-12.col-md-6
+          = f.submit 'Create', class: 'btn'
+    
+.row
+  .col-md-12
+    = link_to 'Back', [:inibon,:versions]

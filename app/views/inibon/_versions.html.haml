@@ -1,0 +1,8 @@
+= form_tag [:change,:inibon,:versions] do
+  = label_tag :display_version, 'Display Version'
+  = select_tag :display_version, options_for_select([['elige',0]]+Inibon::Version.all.map{|x| [x.name || x.id, x.id] }, selected: Inibon::ArI18n.display_version.try(:id))
+
+  = label_tag :modify_version, 'Modifying Version'
+  = select_tag :modify_version, options_for_select([['elige',0]]+Inibon::Version.all.map{|x| [x.name || x.id, x.id] }, selected: Inibon::ArI18n.modify_version.try(:id))
+
+  = submit_tag 'Cambiar', class: 'btn btn-xs'

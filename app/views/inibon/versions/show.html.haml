@@ -1,0 +1,61 @@
+.breadcrumb
+  = render 'inibon/breadcrumb', breadcrumbs: [['Versions',[:inibon,:versions]]]
+  = render 'inibon/versions'
+
+.row
+  %h1.col-md-12 Versión #{@version.name} (#{@version.id})
+
+.row
+  .col-md-12
+    = link_to 'Editar', [:edit,:inibon,@version], class: 'btn btn-sm'
+
+.row
+  .col-md-12
+    - if Inibon::Key.with_missing_version(Inibon::ArI18n.display_version.try(:id),@version.id).none?
+      No missing keys against display version
+    - else
+      %h2= link_to "Missing keys against display version (#{Inibon::Key.with_missing_version(Inibon::ArI18n.display_version.try(:id),@version.id).length})",
+        '#', data:{toggle: :collapse, target: '#missings'}
+      %table.table.table-bordered.collapse#missings
+        %tr
+          %th Key
+        - Inibon::Key.with_missing_version(Inibon::ArI18n.display_version.try(:id),@version.id).each do |k|
+          %tr
+            %td= link_to k.key, inibon_key_path(k.key.gsub('.',':'))
+
+.row
+  .col-md-12
+    - if Inibon::Key.with_missing_version(@version.id,Inibon::ArI18n.display_version.try(:id)).none?
+      No Extra keys against display version
+    - else
+      %h2= link_to "Extra keys against display version (#{Inibon::Key.with_missing_version(@version.id,Inibon::ArI18n.display_version.try(:id)).length})",
+        '#', data:{toggle: :collapse, target: '#extras'}
+      - # = form_tag [:change,:inibon,:versions] do
+      - #   = label_tag :display_version, 'Display Version'
+      - #   = select_tag :display_version, options_for_select([['elige',0]]+Inibon::Version.all.map{|x| [x.name || x.id, x.id] }, selected: Inibon::ArI18n.display_version.try(:id))
+
+      %table.table.table-bordered.collapse#extras
+        %tr
+          %th Key
+        - Inibon::Key.with_missing_version(@version.id,Inibon::ArI18n.display_version.try(:id)).each do |k|
+          %tr
+            %td= link_to k.key, inibon_key_path(k.key.gsub('.',':'))
+.row
+  .col-md-12
+    - if Inibon::Key.with_differences(@version.id,Inibon::ArI18n.display_version.try(:id)).none?
+      No difference against display version
+    - else
+      %h2= link_to "Difference against display version", '#', data:{toggle: :collapse, target: '#diffs'}
+      %table.table.table-bordered#diffs
+        %tr
+          %th Key
+          %th Locale
+          %th Translation
+          %th Previous Translation
+        - Inibon::Key.with_differences(@version.id,Inibon::ArI18n.display_version.try(:id)).each do |k,(locale_id,cnt)|
+          - l = Inibon::Locale.find(locale_id)
+          %tr
+            %td= link_to k, inibon_key_path(k.gsub('.',':'))
+            %td= l.identification
+            %td= Inibon::Translation.with_key(Inibon::Key.find_by_key(k)).in_locale(l).in_version(@version).last.try(:value)
+            %td= Inibon::Translation.with_key(Inibon::Key.find_by_key(k)).in_locale(l).in_version(Inibon::ArI18n.display_version.try(:id)).last.try(:value)

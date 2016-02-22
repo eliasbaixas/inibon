@@ -1,0 +1,29 @@
+.breadcrumb
+  = render 'inibon/breadcrumb', breadcrumbs: []
+  = render 'inibon/versions'
+
+%h1 All Versions
+
+%h2= link_to 'New Version', [:new,:inibon,:version], class: 'btn'
+
+%table.table.table-bordered
+  %tr
+    %th Version
+    %th Name
+    %th Status
+    %th Actions
+  - Inibon::Version.order('id DESC').each do |x|
+    %tr
+      %td= x.id
+      %td= x.name
+      %td
+        - case x.id
+        - when Inibon::ArI18n.display_version
+          = 'Display version'
+        - when Inibon::ArI18n.modify_version
+          = 'Modifying version'
+        - else
+          = 'Old version'
+      %td
+        = link_to 'Show', [:inibon,x], class: 'btn btn-xs'
+        = link_to 'Edit', [:edit, :inibon,x], class: 'btn btn-xs'

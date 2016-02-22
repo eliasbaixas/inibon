@@ -1,0 +1,15 @@
+.form-group
+  = f.label :name, 'Nombre', class: 'control-label col-xs-12 col-md-6'
+  .col-xs-12.col-md-6
+    = f.text_field :name, class: 'form-control'
+
+.form-group
+  = f.label :key, 'Clave', class: 'control-label col-xs-12 col-md-6'
+  .col-xs-12.col-md-6
+    = f.text_field :key, class: 'form-control'
+
+.form-group
+  = f.label :status, "Estado", class: 'control-label col-xs-12 col-md-6'
+  .col-xs-12.col-md-6
+    = f.select :status, Inibon::Locale::STATUSES, class: 'form-control'
+

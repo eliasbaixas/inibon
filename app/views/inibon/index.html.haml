@@ -1,0 +1,26 @@
+.breadcrumb
+  = render 'inibon/breadcrumb'
+  = render 'inibon/versions'
+
+%h1 Listing #{@clazz.model_name.plural} for #{@chain.map{|x| x.identification}.join(' > ')}
+
+- begin
+  = render "inibon/#{@clazz.model_name.plural}/#{params[:action]}"
+- rescue ActionView::MissingTemplate
+
+%table.table.table-bordered
+  %thead
+    %tr
+      - @clazz.column_names.each do |k|
+        %th= k.to_s.humanize
+
+  %tbody
+    - @things.each do |thing|
+      %tr
+        - @clazz.column_names.each do |k|
+          %td= k == 'id' ? link_to(content_tag(:strong, thing.send(k)),[:inibon]+@chain + [thing], class: 'btn') : h(thing.send(k))
+        %td= link_to 'Show', [:inibon]+@chain + [thing]
+        %td= link_to 'Edit', [:edit, :inibon] + @chain + [thing]
+        %td= link_to 'Destroy', [:inibon] + @chain + [thing], confirm: 'Are you sure?', method: :delete
+
+= link_to "New #{@clazz.name}", [:new,:inibon] + @chain + [@clazz.model_name.param_key], class: 'btn'
