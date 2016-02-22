@@ -8,7 +8,7 @@
   %h2 Success
   %ul
     - @success.each do |k,v|
-      %li= link_to k, [:inibon,@locale,v]
+      %li= link_to k, inibon.url_for([@locale,v])
 
 #errors
   %h2 Errors

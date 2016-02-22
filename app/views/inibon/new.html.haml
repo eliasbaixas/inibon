@@ -4,10 +4,10 @@
 
 %h1 Nuevo #{@clazz.model_name.param_key.humanize} para #{@chain.map{|x| x.identification}.join(' > ')}
 
-= form_for(@chain.last, as: :thingy, url: [:inibon]+@chain, html: {class: 'form'}) do |f|
+= form_for(@chain.last, as: :thingy, url: inibon.url_for(@chain), html: {class: 'form'}) do |f|
   = render 'shared/errors', object: f.object, name: f.object.class.name
   = render "form", f: f
   = f.submit 'Create', class: 'btn'
 
-= link_to 'Show', polymorphic_url([:inibon]+@chain)
-= link_to 'Back', polymorphic_url([:inibon]+@chain[0..-2] + [@clazz.model_name.route_key])
+= link_to 'Show', inibon.polymorphic_url([:inibon]+@chain)
+= link_to 'Back', inibon.polymorphic_url([:inibon]+@chain[0..-2] + [@clazz.model_name.route_key])

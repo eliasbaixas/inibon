@@ -1,4 +1,4 @@
-class Inibon::BaseController < ApplicationController
+class Inibon::BaseController < Inibon::ApplicationController
 
   before_filter :fetch_scope, except: [:landing]
 

@@ -1,19 +1,19 @@
 %h1 Copies
 
-%h2= link_to 'Versiones', [:inibon,:versions]
+%h2= link_to 'Versiones', inibon.url_for([:versions])
 %ul
   - Inibon::Version.order('id DESC').limit(4).all.each do |l|
-    %li= link_to "#{l.name} (#{l.id}): ", [:inibon,l]
+    %li= link_to "#{l.name} (#{l.id}): ", inibon.url_for([l])
 
-%h2= link_to 'Locales', [:inibon,:locales]
+%h2= link_to 'Locales', inibon.url_for([:locales])
 %ul
   - Inibon::Locale.all.map{|x| [x,Inibon::Key.with_missing_locales(x.key).count('id')] }.each do |l,cnt|
-    %li!= "#{l.name} (#{l.key}): " + (cnt.zero? ? "No missing translations" : link_to("#{cnt} missing translations", [:missing,:inibon,l]))
-%h2= link_to 'Keys', inibon_keys_path
-%h2= link_to 'Translations', inibon_translations_path
+    %li!= "#{l.name} (#{l.key}): " + (cnt.zero? ? "No missing translations" : link_to("#{cnt} missing translations", inibon.url_for([:missing,l])))
+%h2= link_to 'Keys', inibon.keys_path
+%h2= link_to 'Translations', inibon.translations_path
 
 %h2 Idiomas:
 
 %ul
   - Inibon::Locale.all.each do |l|
-    %li= link_to l.name, [:inibon,l]
+    %li= link_to l.name, inibon.url_for([l])

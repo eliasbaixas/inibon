@@ -11,7 +11,7 @@
     %h2 Success
     %ul
       - @success.each do |k,v|
-        %li= link_to k, [:inibon,@locale,v]
+        %li= link_to k, inibon.url_for([@locale,v])
   
   #errors
     %h2 Errors
@@ -24,7 +24,7 @@
     %h1 Missing Translations for #{@locale.name} (#{@locale.key})
   .col-md-12
     %h3 Copy all from:
-    = form_tag url_for do |f|
+    = form_tag inibon.url_for do |f|
       = select_tag :copy_locale, options_for_select((Inibon::Locale.all - [@locale]).ergo{|x| x.map(&:name).zip(x.map(&:key)) })
       = submit_tag "Copy all!", class: 'btn btn-primary btn-xs'
 
@@ -33,4 +33,4 @@
   .col-md-12
     %ul
       - @keys.each do |b|
-        %li!= link_to "Translate #{content_tag(:strong,b.key)} to #{@locale.name}".html_safe, [:new, :inibon, @locale, b, :translation]
+        %li!= link_to "Translate #{content_tag(:strong,b.key)} to #{@locale.name}".html_safe, inibon.url_for([:new, @locale, b, :translation])

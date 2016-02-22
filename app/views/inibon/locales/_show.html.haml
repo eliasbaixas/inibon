@@ -6,9 +6,9 @@
     - if cnt.zero? 
       No missing translations
     - else
-      != link_to("#{cnt} missing translations", [:missing,:inibon,@locale])
+      != link_to("#{cnt} missing translations", inibon.url_for([:missing,@locale]))
   .col-md-6
     %h3 Import from YAML file
-    = form_tag [:from_yaml, :inibon, @locale], multipart: true do
+    = form_tag inibon.url_for([:from_yaml, @locale]), multipart: true do
       = file_field_tag 'yaml'
       = submit_tag 'Submit', class: 'btn'

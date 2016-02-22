@@ -1,4 +1,4 @@
 %h2 Missing translations:
 %ul
   - @thing.missing_locales.each do |l|
-    %li= link_to "Create #{l.name} (#{l.key}) translation", [:new,:inibon,l, @key,:translation].uniq
+    %li= link_to "Create #{l.name} (#{l.key}) translation", inibon.url_for([:new,l, @key,:translation].uniq)

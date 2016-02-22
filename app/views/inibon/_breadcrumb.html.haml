@@ -1,6 +1,6 @@
 - breadcrumbs = nil unless local_assigns.has_key?(:breadcrumbs)
 
-= link_to 'Inibon', [:inibon,:root]
+= link_to 'Inibon', inibon.url_for([:root])
 = ">"
 
 - if breadcrumbs
@@ -9,9 +9,9 @@
     = ">"
 - else
   - @chain.dup.each_with_index do |x,i|
-    = link_to x.class.model_name.plural, [:inibon] + @chain.first(i) + [x.class.model_name.route_key]
+    = link_to x.class.model_name.plural, inibon.url_for(@chain.first(i) + [x.class.model_name.route_key])
     = ">"
-    = link_to x.identification, [:inibon] + @chain.first(i) + [x]
+    = link_to x.identification, inibon.url_for(@chain.first(i) + [x])
     = ">"
   
   - if @thing

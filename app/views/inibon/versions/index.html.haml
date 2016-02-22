@@ -4,7 +4,7 @@
 
 %h1 All Versions
 
-%h2= link_to 'New Version', [:new,:inibon,:version], class: 'btn'
+%h2= link_to 'New Version', inibon.url_for([:new,:version]), class: 'btn'
 
 %table.table.table-bordered
   %tr
@@ -25,5 +25,5 @@
         - else
           = 'Old version'
       %td
-        = link_to 'Show', [:inibon,x], class: 'btn btn-xs'
-        = link_to 'Edit', [:edit, :inibon,x], class: 'btn btn-xs'
+        = link_to 'Show', inibon.url_for([x]), class: 'btn btn-xs'
+        = link_to 'Edit', inibon.url_for([:edit, x]), class: 'btn btn-xs'

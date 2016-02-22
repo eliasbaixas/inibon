@@ -7,7 +7,7 @@
 
 .row
   .col-md-6
-    = form_for [:inibon, @version] do |f|
+    = form_for inibon.url_for([@version]) do |f|
       = render 'form', f:f
       .form-group
         .col-xs-12.col-md-6
@@ -15,4 +15,4 @@
     
 .row
   .col-md-12
-    = link_to 'Back', [:inibon,@version]
+    = link_to 'Back', inibon.url_for([@version])

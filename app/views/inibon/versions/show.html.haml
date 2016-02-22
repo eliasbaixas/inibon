@@ -7,7 +7,7 @@
 
 .row
   .col-md-12
-    = link_to 'Editar', [:edit,:inibon,@version], class: 'btn btn-sm'
+    = link_to 'Editar', inibon.url_for([:edit,@version]), class: 'btn btn-sm'
 
 .row
   .col-md-12
@@ -21,7 +21,7 @@
           %th Key
         - Inibon::Key.with_missing_version(Inibon::ArI18n.display_version.try(:id),@version.id).each do |k|
           %tr
-            %td= link_to k.key, inibon_key_path(k.key.gsub('.',':'))
+            %td= link_to k.key, inibon.key_path(k.key.gsub('.',':'))
 
 .row
   .col-md-12
@@ -39,7 +39,7 @@
           %th Key
         - Inibon::Key.with_missing_version(@version.id,Inibon::ArI18n.display_version.try(:id)).each do |k|
           %tr
-            %td= link_to k.key, inibon_key_path(k.key.gsub('.',':'))
+            %td= link_to k.key, inibon.key_path(k.key.gsub('.',':'))
 .row
   .col-md-12
     - if Inibon::Key.with_differences(@version.id,Inibon::ArI18n.display_version.try(:id)).none?
@@ -55,7 +55,7 @@
         - Inibon::Key.with_differences(@version.id,Inibon::ArI18n.display_version.try(:id)).each do |k,(locale_id,cnt)|
           - l = Inibon::Locale.find(locale_id)
           %tr
-            %td= link_to k, inibon_key_path(k.gsub('.',':'))
+            %td= link_to k, inibon.key_path(k.gsub('.',':'))
             %td= l.identification
             %td= Inibon::Translation.with_key(Inibon::Key.find_by_key(k)).in_locale(l).in_version(@version).last.try(:value)
             %td= Inibon::Translation.with_key(Inibon::Key.find_by_key(k)).in_locale(l).in_version(Inibon::ArI18n.display_version.try(:id)).last.try(:value)
