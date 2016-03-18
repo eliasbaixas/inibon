@@ -37,10 +37,15 @@ module Inibon
         # translation.save
       end
 
+      #TODO if silence inibon activerecord activity...
       def translate(locale, key, options = {})
-        super
+        ActiveRecord::Base.logger.silence do
+          super
+        end
       rescue ::I18n::MissingTranslationData => e
-        self.store_default_translations(locale, key, options)
+        ActiveRecord::Base.logger.silence do
+          self.store_default_translations(locale, key, options)
+        end
         raise e
       end
 
