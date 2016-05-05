@@ -1,5 +1,5 @@
 # encoding: utf-8
-class Inibon::VersionsController < ApplicationController
+class Inibon::VersionsController < Inibon::ApplicationController
 
   def show
     @version = Inibon::Version.find(params[:id])
@@ -35,8 +35,8 @@ class Inibon::VersionsController < ApplicationController
   end
 
   def create
-    last_version= Inibon::Version.scoped(order: 'id DESC').first
-    @version = Inibon::Version.new(params[:version])
+    last_version= Inibon::Version.order('id DESC').first
+    @version = Inibon::Version.new(params.require(:version).permit!)
 
     if @version.save
       @version.translations = last_version.try(:translations) || Inibon::Translation.all

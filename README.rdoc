@@ -1,3 +1,6 @@
+= TODO
+* remove dependency on render 'shared/errors' (shared/errors must exist in app, should be provided by inibon)
+
 = Inibon
 
 Store I18n translations in database

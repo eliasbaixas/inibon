@@ -1,7 +1,7 @@
 %h1 Editing #{@clazz.model_name.singular} #{@chain.last.id}
 
 = form_for(@chain.last, as: :thingy,  url: inibon.url_for(@chain), html: {class: 'form', method: :put}) do |f|
-  = render 'shared/errors', object: f.object, name: f.object.class.name
+  = render 'inibon/shared/errors', object: f.object, name: f.object.class.name
   = render 'form', f: f
   = f.submit 'Update', class: 'btn'
 
