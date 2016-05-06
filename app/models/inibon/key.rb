@@ -16,6 +16,9 @@ class Inibon::Key < ActiveRecord::Base
   belongs_to :father, class_name: 'Inibon::Key', counter_cache: :children_count
   has_many :sons, class_name: 'Inibon::Key', foreign_key: :father_id
 
+  # This validation is important, otherwise /inibon/locales/ca/keys becomes @cain=[Inibon::Locale.param_find('ca'),Inibon::Key.param_find(nil)] 
+  validates_presence_of :key 
+
   scope :with_missing_locales, ->(*x) {
     select('*').joins(<<-joins).where('inibon_translations.id IS NULL AND inibon_keys.children_count IS NULL')
       left outer join inibon_locales on #{x.any? ? "inibon_locales.key IN ('#{x.join('\',\'')}')" : '1'}
@@ -64,11 +67,13 @@ class Inibon::Key < ActiveRecord::Base
   end
 
   def self.ensure_key(b)
-    if x = find_by_key(b.to_s)
+    if x = Inibon::Key.find_by_key(b.to_s)
       yield(x) if block_given?
     else
       parts = b.to_s.split('.')
-      x = parts.inject(nil) { |parent,el| find_by_key([*parent.try(:key),el]*'.') || Inibon::Key.create(key: [*parent.try(:key),el]*'.', parent: parent, father: parent) }
+      x = parts.inject(nil) do |parent,el|
+        Inibon::Key.find_by_key([*parent.try(:key),el]*'.') || Inibon::Key.create(key: [*parent.try(:key),el]*'.', parent: parent, father: parent)
+      end
       yield(x) if block_given?
     end
     x
