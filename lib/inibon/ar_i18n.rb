@@ -89,7 +89,14 @@ module Inibon
       result = Inibon::Translation.in_locale(locale).with_key(key).all
 
       if result.empty?
-        nil
+        if k=Inibon::Key.with_key(key).first
+          h = k.descendants.map(&:key).inject({}) do |acc,k|
+            acc.update((k - /^#{key}\./).to_sym => Inibon::Translation.in_locale(locale).with_key(k).all.first.try(:value))
+          end.compact
+          h if h.any?
+        else
+          nil
+        end
       elsif result.first.key.key == key
         result.first.value
       else
