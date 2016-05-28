@@ -1,5 +1,8 @@
 class Inibon::KeysController < Inibon::BaseController
 
+  def find
+  end
+
   def show
 
     if @chain.find_all {|x| Inibon::Key === x}.length > 1
@@ -17,9 +20,9 @@ class Inibon::KeysController < Inibon::BaseController
 
   def index
     if @chain.last.class == Inibon::Key
-      @things = @scope.last.children
+      @things = @scope.last.children.paginate(page: params[:page])
     else
-      @things = @scope.all
+      @things = @scope.paginate(page: params[:page])
     end
     render 'inibon/index'
   end

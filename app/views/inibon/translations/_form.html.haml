@@ -6,7 +6,8 @@
     - next if t == @translation
     %tr
       %td= t.locale.key
-      %td= link_to_function t.value, "$('#the_value').val(#{t.value.to_json})"
+      %td
+        %a{href:'#',onclick: "$('#the_value').val(#{t.value.to_json}); return false;"}= t.value
 
 .form-group
   = f.label :value, 'Valor', class: 'control-label col-xs-12 col-md-6'

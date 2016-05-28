@@ -15,7 +15,7 @@ class Inibon::BaseController < Inibon::ApplicationController
   end
 
   def index
-    @things = @scope.all
+    @things = @scope.paginate(page: params[:page], per_page: 50)
     render 'inibon/index'
   end
 
@@ -32,7 +32,7 @@ class Inibon::BaseController < Inibon::ApplicationController
     extra_params = @chain.inject({}) {|acc,x| acc.update(x.class.model_name.singular + '_id' => x.id) }
     @thing = @scope.new(extra_params.merge(params[:thingy])) #@clazz.new((@scope.proxy_options[:conditions].merge(extra_params) & @clazz.column_names).merge(params[:thingy]))
     if @thing.save
-      @things = @scope.all
+      @things = @scope.paginate(page: params[:page])
       render 'inibon/index'
     else
       render 'inibon/new'

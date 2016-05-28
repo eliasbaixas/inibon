@@ -20,7 +20,7 @@ class Inibon::Key < ActiveRecord::Base
   validates_presence_of :key 
 
   scope :with_missing_locales, ->(*x) {
-    select('*').joins(<<-joins).where('inibon_translations.id IS NULL AND inibon_keys.children_count IS NULL')
+    select('inibon_keys.*').joins(<<-joins).where('inibon_translations.id IS NULL AND inibon_keys.children_count IS NULL')
       left outer join inibon_locales on #{x.any? ? "inibon_locales.key IN ('#{x.join('\',\'')}')" : '1'}
       left outer join inibon_translations on inibon_translations.key_id = inibon_keys.id AND inibon_translations.locale_id = inibon_locales.id
       joins

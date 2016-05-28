@@ -14,16 +14,28 @@ Inibon::Engine.routes.draw do
       match :missing, via: :all
     end
     resources :keys do
+      collection do
+        get 'find' => 'keys#find'
+      end
       resources :translations
     end
     resources :translations do
-      resources :keys
+      resources :keys do
+        collection do
+          get 'find' => 'keys#find'
+        end
+      end
     end
   end
 
   resources :keys do
     resources :translations
-    resources :keys
+    resources :keys do
+      collection do
+        get 'find' => 'keys#find'
+      end
+    end
+
     resources :locales do
       resources :translations
     end

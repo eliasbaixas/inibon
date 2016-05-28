@@ -1,4 +1,7 @@
-%h2 Missing translations:
-%ul
-  - @thing.missing_locales.each do |l|
-    %li= link_to "Create #{l.name} (#{l.key}) translation", inibon.url_for([:new,l, @key,:translation].uniq)
+.row
+  .col-xs-12
+    %h2 Missing translations:
+.row
+  .list-group.col-xs-4
+    - @thing.missing_locales.each do |l|
+      %a.btn.list-group-item{href: inibon.url_for([:new,l, @key,:translation].uniq)}= "Create #{l.name} (#{l.key}) translation"
