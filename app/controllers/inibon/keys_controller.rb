@@ -4,7 +4,7 @@ class Inibon::KeysController < Inibon::BaseController
   end
 
   def create
-    Inibon::Key.ensure_key(params[:key])
+    Inibon::Key.ensure_key(params[:thingy][:key])
     render 'inibon/index'
   end
 
