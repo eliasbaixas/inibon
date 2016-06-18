@@ -15,7 +15,7 @@ class Inibon::TranslationsController < Inibon::BaseController
     @thing.versions << @version
 
     if @thing.save
-      @things = @scope.all
+      @things = @scope.paginate(page: params[:page])
       render 'inibon/index'
     else
       render 'inibon/new'
