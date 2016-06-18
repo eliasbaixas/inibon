@@ -3,6 +3,11 @@ class Inibon::KeysController < Inibon::BaseController
   def find
   end
 
+  def create
+    Inibon::Key.ensure_key(params[:key])
+    render 'inibon/index'
+  end
+
   def show
 
     if @chain.find_all {|x| Inibon::Key === x}.length > 1
