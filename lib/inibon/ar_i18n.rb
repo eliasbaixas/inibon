@@ -40,11 +40,16 @@ module Inibon
 
       #TODO if silence inibon activerecord activity...
       def translate(locale, key, options = {})
-        ActiveRecord::Base.logger.silence do
+        if ActiveSupport::Logger === ActiveRecord::Base.logger
+          ActiveRecord::Base.logger.silence { super }
+        else
+          ActiveRecord::Base.logger.warn("Algo pasa con Mary! #{ActiveRecord::Base.logger.class.name}")
           super
         end
       rescue ::I18n::MissingTranslationData => e
-        ActiveRecord::Base.logger.silence do
+        if ActiveSupport::Logger === ActiveRecord::Base.logger
+          ActiveRecord::Base.logger.silence { self.store_default_translations(locale, key, options) }
+        else
           self.store_default_translations(locale, key, options)
         end
         raise e
