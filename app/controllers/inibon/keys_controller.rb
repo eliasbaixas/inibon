@@ -5,7 +5,7 @@ class Inibon::KeysController < Inibon::BaseController
 
   def create
     Inibon::Key.ensure_key(params[:thingy][:key])
-    render 'inibon/index'
+    redirect_to action: :index
   end
 
   def show
