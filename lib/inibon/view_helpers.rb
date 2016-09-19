@@ -97,12 +97,13 @@ module Inibon::ViewHelpers
   end
 
   def valid_languages
-    AppConfig.languages.map(&:to_sym)
+    I18n.available_locales
+    #AppConfig.languages.map(&:to_sym)
     #@@valid_languages ||= Dir.glob(File.join(Rails.root, 'config', 'locales', '*.yml')).collect {|f| File.basename(f).split('.').first}.collect(&:to_sym)
   end
 
   def find_language(lang)
-    @@languages_lookup = valid_languages.inject({}) {|k, v| k[v.to_s.downcase] = v; k }
+    @@languages_lookup ||= valid_languages.inject({}) {|k, v| k[v.to_s.downcase] = v; k }
     @@languages_lookup[lang.to_s.downcase]
   end
 
