@@ -17,7 +17,7 @@ Gem::Specification.new do |s|
   s.files = Dir["{app,config,db,lib}/**/*", "Rakefile", "README.rdoc"]
 
   s.add_dependency "will_paginate-bootstrap", "~> 1.0.1"
-  s.add_dependency "rails", "~> 4.2.0"
+  s.add_dependency "rails", ">= 4.2.0"
   s.add_dependency "ancestry", "~> 2.1.0"
   s.add_dependency "statux", "~> 0.0.1"
 
