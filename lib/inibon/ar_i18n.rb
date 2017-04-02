@@ -28,8 +28,8 @@ module Inibon
 
         Inibon::Locale.with_locale('default') do |l|
           Inibon::Key.ensure_key(key) do |b|
-            next if Inibon::Translation.in_locale(l).with_key(b).where(value: content,interpolations: interpolations).exists?
-            Inibon::Translation.in_locale(l).with_key(b).create(value: content,interpolations: interpolations)
+            next if Inibon::Translation.in_locale(l).with_key(b).where(value: content,interpolations: interpolations.map(&:to_s).to_yaml).exists?
+            Inibon::Translation.in_locale(l).with_key(b).create(value: content)
           end
         end
 
