@@ -3,9 +3,11 @@ module Inibon::ViewHelpers
 
   # if we want translations outside ActionView, we need to have a #translate method:
   module SimpleTranslate
+
     def translate(*args)
-      ::I18n.translate(*args).html_safe
+      ::I18n.translate(*args).to_s.html_safe
     end
+
   end
 
   def self.included(base)
