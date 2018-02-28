@@ -3,7 +3,7 @@ module Inibon
   class ApplicationController < ::ApplicationController
 
     layout 'application'
-    before_filter :set_inibon_version
+    before_action :set_inibon_version
 
     def set_inibon_version
       Inibon::ArI18n.display_version = Inibon::Version.find_by_id(session[:display_version])

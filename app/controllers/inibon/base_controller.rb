@@ -1,6 +1,6 @@
 class Inibon::BaseController < Inibon::ApplicationController
 
-  before_filter :fetch_scope, except: [:landing]
+  before_action :fetch_scope, except: [:landing]
 
   def landing
     render 'inibon/landing'
