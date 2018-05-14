@@ -49,7 +49,11 @@ module Inibon::ViewHelpers
         #"<span class=\"inibon\" data-inibon-key=\"#{k}\">#{h(x)}</span>"
         "<span class=\"inibon\" data-inibon-key=\"#{k}\">#{x}</span>".html_safe
       else
-        x
+        if opts[:mark]
+          "<span class=\"inibon\" data-inibon-key=\"#{k}\"></span>#{x}".html_safe
+        else
+          x
+        end
       end
   end
 
