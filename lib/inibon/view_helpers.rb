@@ -40,7 +40,9 @@ module Inibon::ViewHelpers
         else
           raise "Translation string with multiple values: #{args.first}"
         end
-      end.gsub("\n","<br />")
+      end
+
+      x=x.gsub("\n","<br />") unless opts[:nobr]
 
       unless opts[:nohtml] || Rails.env.production?
         k=[::I18n.locale,args.first,*opts[:scope]].compact.join('.')
