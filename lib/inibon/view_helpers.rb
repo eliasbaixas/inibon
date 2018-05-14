@@ -50,6 +50,7 @@ module Inibon::ViewHelpers
         "<span class=\"inibon\" data-inibon-key=\"#{k}\">#{x}</span>".html_safe
       else
         if opts[:mark]
+          k=[::I18n.locale,args.first,*opts[:scope]].compact.join('.')
           "<span class=\"inibon\" data-inibon-key=\"#{k}\"></span>#{x}".html_safe
         else
           x
