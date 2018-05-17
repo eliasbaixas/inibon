@@ -44,7 +44,7 @@ module Inibon::ViewHelpers
 
       x=x.gsub("\n","<br />") unless opts[:nobr]
 
-      unless opts[:nohtml] || Rails.env.production?
+      unless opts[:nohtml]
         k=[::I18n.locale,args.first,*opts[:scope]].compact.join('.')
         #"<span class=\"inibon\" data-inibon-key=\"#{k}\">#{h(x)}</span>"
         "<span class=\"inibon\" data-inibon-key=\"#{k}\">#{x}</span>".html_safe
