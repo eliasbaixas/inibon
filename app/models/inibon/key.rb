@@ -13,7 +13,7 @@ class Inibon::Key < ActiveRecord::Base
   has_many :translations, class_name: 'Inibon::Translation', foreign_key: :key_id
   has_many :locales, through: :translations, class_name: 'Inibon::Locale', foreign_key: :locale_id
 
-  belongs_to :father, class_name: 'Inibon::Key', counter_cache: :children_count
+  belongs_to :father, class_name: 'Inibon::Key', counter_cache: :children_count, optional: true
   has_many :sons, class_name: 'Inibon::Key', foreign_key: :father_id
 
   # This validation is important, otherwise /inibon/locales/ca/keys becomes @cain=[Inibon::Locale.param_find('ca'),Inibon::Key.param_find(nil)] 
