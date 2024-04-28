@@ -62,7 +62,7 @@ class Inibon::Key < ActiveRecord::Base
       LEFT OUTER JOIN inibon_versionings
         ON inibon_versionings.translation_id = inibon_translations.id AND inibon_versionings.version_id IN (#{a},#{b},NULL)
       GROUP BY inibon_keys.key, inibon_translations.locale_id
-      HAVING cnt > 1
+      HAVING COUNT(DISTINCT inibon_translations.value) > 1
     SQL
   end
 

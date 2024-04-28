@@ -39,4 +39,4 @@
         %td= @thing.send(k.to_s).pretty_inspect
   
 = link_to 'Edit', inibon.url_for([:edit]+@chain), class: 'btn'
-= link_to 'Back', inibon.polymorphic_url(@chain[0..-2] + [@clazz.model_name.route_key]), class: 'btn'
+= link_to 'Back', inibon.polymorphic_url(@chain[0..-2] + [@clazz.model_name.route_key.to_sym]), class: 'btn'

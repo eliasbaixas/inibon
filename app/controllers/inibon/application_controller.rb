@@ -2,7 +2,7 @@ module Inibon
 
   class ApplicationController < ::ApplicationController
 
-    layout 'application'
+    layout 'inibon/application'
     before_action :set_inibon_version
 
     def set_inibon_version
