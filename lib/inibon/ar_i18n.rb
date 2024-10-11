@@ -25,7 +25,7 @@ module Inibon
 
       def store_default_translation(locale, key, interpolations,content=nil)
         return unless content && key.present?
-        return if Proc === content
+        return if Proc === content || Array === content && content.any?{|y| Proc === y}
 
         Inibon::Locale.with_locale('default') do |l|
           Inibon::Key.ensure_key(key) do |b|
