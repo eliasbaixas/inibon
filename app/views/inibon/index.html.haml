@@ -10,7 +10,7 @@
 
 .row
   .col-xs-6
-    = link_to "New #{@clazz.name}", inibon.url_for([:new] + @chain + [@clazz.model_name.param_key]), class: 'btn btn-primary btn-lg'
+    = link_to "New #{@clazz.name}", inibon.url_for([:new] + @chain + [@clazz.model_name.param_key.to_sym]), class: 'btn btn-primary btn-lg'
   - if false # TODO
     .col-xs-6
       = form_tag url: find_key_path, html: {method: :get, class: 'form-inline'} do
@@ -42,4 +42,4 @@
   .col-xs-12
     = will_paginate(@things, {renderer: BootstrapPagination::Rails})
 
-= link_to "New #{@clazz.name}", inibon.url_for([:new] + @chain + [@clazz.model_name.param_key]), class: 'btn btn-primary btn-lg'
+= link_to "New #{@clazz.name}", inibon.url_for([:new] + @chain + [@clazz.model_name.param_key.to_sym]), class: 'btn btn-primary btn-lg'

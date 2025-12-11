@@ -5,7 +5,9 @@ module Inibon::ViewHelpers
   module SimpleTranslate
 
     def translate(*args)
-      ::I18n.translate(*args).to_s.html_safe
+      key = args.first
+      opts = args.last
+      ::I18n.translate(key, **opts).to_s.html_safe
     end
 
   end

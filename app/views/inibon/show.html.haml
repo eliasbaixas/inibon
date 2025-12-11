@@ -22,7 +22,7 @@
           %tr
             %td= "#{assoc.macro} #{assoc.name}"
             %td= link_to "#{assoc.class_name.constantize.model_name.route_key} (#{@thing.send(assoc.name).count})",
-              inibon.url_for(((@chain) + [assoc.class_name.constantize.model_name.route_key]).uniq), class: 'btn'
+              inibon.url_for(((@chain) + [assoc.class_name.constantize.model_name.route_key.to_sym]).uniq), class: 'btn'
         - rescue => e
           %tr
             %td= "#{assoc.macro} #{assoc.name}"
@@ -39,4 +39,4 @@
         %td= @thing.send(k.to_s).pretty_inspect
   
 = link_to 'Edit', inibon.url_for([:edit]+@chain), class: 'btn'
-= link_to 'Back', inibon.polymorphic_url(@chain[0..-2] + [@clazz.model_name.route_key]), class: 'btn'
+= link_to 'Back', inibon.polymorphic_url(@chain[0..-2] + [@clazz.model_name.route_key.to_sym.to_sym]), class: 'btn'

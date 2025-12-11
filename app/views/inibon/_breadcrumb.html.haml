@@ -9,7 +9,7 @@
     = ">"
 - else
   - @chain.dup.each_with_index do |x,i|
-    = link_to x.class.model_name.plural, inibon.url_for(@chain.first(i) + [x.class.model_name.route_key])
+    = link_to x.class.model_name.plural, inibon.url_for(@chain.first(i) + [x.class.model_name.route_key.to_sym])
     = ">"
     = link_to x.identification, inibon.url_for(@chain.first(i) + [x])
     = ">"
