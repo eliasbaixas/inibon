@@ -16,7 +16,7 @@ class Inibon::Translation < ActiveRecord::Base
   statux %w{wip production deprecated}, required: true, column: :state, initial: 'wip'
 
   # serialize :value
-  serialize :interpolations, Inibon::JsonCoder
+  serialize :interpolations, coder: Inibon::JsonCoder
 
   belongs_to :key, class_name: 'Inibon::Key', foreign_key: :key_id
   belongs_to :locale, class_name: 'Inibon::Locale', foreign_key: :locale_id
